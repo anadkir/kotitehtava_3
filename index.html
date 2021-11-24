@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <title>Kello</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .clock{
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            border: black solid 10px;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .numbers, .clock-hands{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            font-size: 40px;
+            color: grey;
+            border-radius: 50%;
+        }
+        .num{
+            display: inline-block;
+            margin: 0;
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, 0);
+            height: 100%;
+            width: 78px;
+            text-align: center;
+        }
+        .main-num{
+            color: black;
+        }
+        .one{
+            transform: translate(-50%, 0) rotate(30deg);
+        }
+        .two{
+            transform: translate(-50%, 0) rotate(60deg);
+        }
+        .three{
+            transform: translate(-50%, 0) rotate(90deg);
+        }
+        .four{
+            transform: translate(-50%, 0) rotate(120deg);
+        }
+        .five{
+            transform: translate(-50%, 0) rotate(150deg);
+        }
+        .six{
+            transform: translate(-50%, 0) rotate(180deg);
+        }
+        .seven{
+            transform: translate(-50%, 0) rotate(210deg);
+        }
+        .eight{
+            transform: translate(-50%, 0) rotate(240deg);
+        }
+        .nine{
+            transform: translate(-50%, 0) rotate(270deg);
+        }
+        .ten{
+            transform: translate(-50%, 0) rotate(300deg);
+        }
+        .eleven{
+            transform: translate(-50%, 0) rotate(330deg);
+        }
+        .point{
+            background-color: black;
+            position: relative;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            z-index: 10;
+        }
+
+        .clock-hand{
+            top: 0;
+            position: absolute;
+            height: 500px;
+            width: 78px;
+            left: 50%;
+        }
+        .hour{
+            width: 20px;
+            background-color: black;
+            height: 120px;
+            display: inline-block;
+            position: absolute;
+            bottom: 250px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .minute{
+            width: 10px;
+            background-color: grey;
+            height: 180px;
+            display: inline-block;
+            position: absolute;
+            bottom: 250px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .second{
+            width: 5px;
+            background-color: blue;
+            height: 150px;
+            display: inline-block;
+            position: absolute;
+            bottom: 250px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .millisecond{
+            width: 60px;
+            height: 40px;
+            border: black solid 2px;
+            position: absolute;
+            right: 80px;
+            border-radius: 5px;
+            font-size: 30px;
+            line-height: 40px;
+        }
+    </style>
+</head>
+<body>
+<div class="clock">
+    <div class="numbers">
+        <p class="main-num num twelve">12</p>
+        <p class="num one">1</p>
+        <p class="num two">2</p>
+        <p class="main-num num three">3</p>
+        <p class="num four">4</p>
+        <p class="num five">5</p>
+        <p class="main-num num six">6</p>
+        <p class="num seven">7</p>
+        <p class="num eight">8</p>
+        <p class="main-num num nine">9</p>
+        <p class="num ten">10</p>
+        <p class="num eleven">11</p>
+    </div>
+
+    <div class="point">
+
+    </div>
+
+    <div class="clock-hands">
+        <div class="clock-hand" id="hour"><div class="hour"></div></div>
+        <div class="clock-hand" id="minute"><div class="minute"></div></div>
+        <div class="clock-hand" id="second"><div class="second"></div></div>
+    </div>
+
+    <div class="millisecond" id="millisecond">
+
+
+    </div>
+
+</div>
+
+<script>
+
+    let hClockHand = document.getElementById('hour')
+    let mClockHand = document.getElementById('minute')
+    let sClockHand = document.getElementById('second')
+
+    setInterval( () => {
+        const time = new Date()
+        let h = time.getHours()
+        let m = time.getMinutes()
+        let s = time.getSeconds()
+
+        let hRotation = (h + m / 60) / 12 * 360 + 'deg'
+        if (h > 12) {
+            hRotation = (h - 12 + m / 60) / 12 * 360 + 'deg'
+        }
+
+        let mRotation = (m + s / 60) / 60 * 360 + 'deg'
+
+        let sRotation = s / 60 * 360 + 'deg'
+
+        hClockHand.style.transform = `translate(-50%, 0) rotate(${hRotation})`
+        mClockHand.style.transform = `translate(-50%, 0) rotate(${mRotation})`
+        sClockHand.style.transform = `translate(-50%, 0) rotate(${sRotation})`
+    }, 1000)
+
+    let millisecond = document.getElementById('millisecond')
+    setInterval( () => {
+        let time = new Date()
+        millisecond.innerText = time.getMilliseconds().toString()
+    },10)
+</script>
+</body>
+</html>
